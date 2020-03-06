@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <title>Movies</title>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+    </h:head>
+    <h:body>
+        <br/>
+
+        <h:form id="form">
+            <p:dataTable value="${moviesForm.model.movies}" 
+                         var="movie" 
+                         reflow="true" 
+                         rows="5" 
+                         paginator="true" 
+                         resizableColumns="true">
+                
+                <f:facet name="header">
+                    <p:commandButton value="New" action="#{moviesForm.newMovie()}" 
+                                     ajax="true"
+                                     oncomplete="PF('dialog').show()" 
+                                     update=":form:detail"/>
+                </f:facet>
+                
+                <p:column headerText="Id">
+                    <h:outputText value="#{movie.id}" />
+                </p:column>
+
+                <p:column headerText="Tittle">
+                    <h:outputText value="#{movie.title}" />
+                </p:column>
+
+                <p:column headerText="Description">
+                    <h:outputText value="#{movie.description}" />
+                </p:column>
+                
+                <p:column headerText="Rental price">
+                    <h:outputText value="#{movie.rentalPrice}" />
+                </p:column>
+                
+                <p:column headerText="Sale price">
+                    <h:outputText value="#{movie.salePrice}" />
+                </p:column>
+
+                <p:column headerText="">
+                    <p:commandButton  value="Delete" icon="pi pi-trash" 
+                                      action="#{moviesForm.deleteMovie(movie)}" ajax="false"/>
+                    <p:commandButton 
+                                     action="#{moviesForm.selectMovie(movie)}"
+                                     update=":form:detail" icon="pi pi-search" 
+                                     value="Select" oncomplete="PF('dialog').show()" />
+                </p:column>
+
+                <f:facet name="footer">
+                </f:facet>
+
+            </p:dataTable>
+
+            <p:dialog header="Movie" widgetVar="dialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="detail" style="text-align:center;">
+                    <p:panelGrid  columns="2" rendered="#{not empty moviesForm.model.selectedMovie}" >
+
+                        <h:outputText value="Id:" />
+                        <p:inputText value="${moviesForm.model.selectedMovie.id}" readonly="${not empty moviesForm.model.selectedMovie.id}"/>
+
+                        <h:outputText value="Description" />
+                        <p:inputText value="#{moviesForm.model.selectedMovie.description}" />
+
+                        <h:outputText value="Rental price" />
+                        <p:inputNumber value="${moviesForm.model.selectedMovie.rentalPrice}"/>
+                        
+                        <h:outputText value="Sale price" />
+                        <p:inputNumber value="${moviesForm.model.selectedMovie.salePrice}"/>
+                        
+                        <p:commandButton  value="Save" icon="pi pi-save" 
+                                          action="#{moviesForm.editMovie()}" ajax="false"/>
+
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+
+    </h:body>
+
+</html>

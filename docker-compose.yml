@@ -1,0 +1,27 @@
+version: '3'
+services:
+  mysql:
+    network_mode: host
+    image: mysql:5.5    
+    environment: 
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+  web:
+    network_mode: host
+    build: 
+      dockerfile: Dockerfile
+      context: web-jsf
+    volumes:
+        - ./web-jsf:/opt/java/app
+    ports:
+      - "5000:5000"
+  microservice:
+    network_mode: host
+    build: 
+      dockerfile: Dockerfile
+      context: microservice
+    volumes:
+      - ./microservice:/opt/java/app
+    ports:
+      - "8080:8080"
