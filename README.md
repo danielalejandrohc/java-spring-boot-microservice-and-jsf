@@ -4,7 +4,8 @@ docker
 docker-compose
 
 # Run
-git clone xxxsxxx
+git clone https://github.com/danielalejandrohc/java-spring-boot-microservice-and-jsf.git
+cd java-spring-boot-microservice-and-jsf
 # This will build and generate the binaries for web and rest service projects
 sh build.sh
 # Start the application
