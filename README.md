@@ -1,4 +1,4 @@
-# Requiriments:
+# Requirements:
 
 docker
 docker-compose
